@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34518.117
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonEssentials", "DragonEssentials\DragonEssentials.csproj", "{44F28184-4129-4720-8017-3C80270E93DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonEssentials.Interfaces", "DragonEssentials.Interfaces\DragonEssentials.Interfaces.csproj", "{8AC50BA3-CEE5-4023-BA77-7A57898D83BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{44F28184-4129-4720-8017-3C80270E93DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44F28184-4129-4720-8017-3C80270E93DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44F28184-4129-4720-8017-3C80270E93DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44F28184-4129-4720-8017-3C80270E93DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AC50BA3-CEE5-4023-BA77-7A57898D83BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AC50BA3-CEE5-4023-BA77-7A57898D83BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AC50BA3-CEE5-4023-BA77-7A57898D83BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AC50BA3-CEE5-4023-BA77-7A57898D83BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2E1462AA-90CD-4C53-BCB8-83846A81E651}
+	EndGlobalSection
+EndGlobal

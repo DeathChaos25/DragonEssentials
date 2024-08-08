@@ -1,0 +1,28 @@
+{
+  "ModId": "DragonEssentials",
+  "ModName": "Dragon Essentials",
+  "ModAuthor": "DeathChaos",
+  "ModVersion": "1.0.0",
+  "ModDescription": "Allows other mods to easily replace files inside of the PAR files in Dragon Engine Yakuza games",
+  "ModDll": "DragonEssentials.dll",
+  "ModIcon": "Preview.png",
+  "ModR2RManagedDll32": "x86/DragonEssentials.dll",
+  "ModR2RManagedDll64": "x64/DragonEssentials.dll",
+  "ModNativeDll32": "",
+  "ModNativeDll64": "",
+  "IsLibrary": true,
+  "ReleaseMetadataFileName": "DragonEssentials.ReleaseMetadata.json",
+  "PluginData": {},
+  "IsUniversalMod": false,
+  "ModDependencies": [
+    "Reloaded.Memory.SigScan.ReloadedII",
+    "reloaded.sharedlib.hooks"
+  ],
+  "OptionalDependencies": [],
+  "SupportedAppId": [
+    "likeadragon8.exe",
+    "likeadragongaiden.exe",
+    "lostjudgment.exe"
+  ],
+  "ProjectUrl": ""
+}
