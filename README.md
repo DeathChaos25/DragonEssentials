@@ -11,6 +11,7 @@ A "modloader" mod for [Reloaded-II](https://reloaded-project.github.io/Reloaded-
 
 ## Planned Features
 - Microsoft Store support (Gamepass)
+- (Unknown how different GOG version is from Steam executable)
 - TBD
 
 ## Usage
