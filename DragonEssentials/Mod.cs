@@ -14,6 +14,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Text;
 using Reloaded.Memory.Interfaces;
 using System.Net;
+using System.Security.Cryptography;
 
 namespace DragonEssentials
 {
@@ -53,13 +54,17 @@ namespace DragonEssentials
         internal unsafe delegate nint GetPath1Delegate(nint file_path, uint a2, nint a3, nint a4);
         internal unsafe delegate int GetPath2Delegate(nint file_path, uint a2, nint a3, nint a4);
 
+        [UnmanagedFunctionPointer(CallingConvention.StdCall, CharSet = CharSet.Unicode)]
+        public delegate IntPtr CreateFileWDelegate( string lpFileName, uint dwDesiredAccess, uint dwShareMode, IntPtr lpSecurityAttributes, uint dwCreationDisposition, uint dwFlagsAndAttributes, IntPtr hTemplateFile
+        );
+
         /// <summary>
         /// The configuration of the currently executing mod.
         /// </summary>
         private readonly IModConfig _modConfig;
         private Dictionary<string, string> _redirections = new();
         private unsafe IHook<GetPath1Delegate> _getPath1Hook;
-        private unsafe IHook<GetPath2Delegate> _getPath2Hook;
+        private IHook<CreateFileWDelegate> _createFileWHook;
 
         private IDragonEssentials _api;
         private string _modsPath;
@@ -90,18 +95,17 @@ namespace DragonEssentials
                     _getPath1Hook = _hooks.CreateHook<GetPath1Delegate>(GetPath1, address).Activate();
                 });
 
-                SigScan(sigs.GetPath2, "GetPath2", address => // currently this hook doesn't work properly
-                {
-                    var funcAddress = GetGlobalAddress(address + 1);
-                    LogDebug($"Real address of GetPath2 found at 0x{funcAddress:X}");
-                    _getPath2Hook = _hooks.CreateHook<GetPath2Delegate>(GetPath2, (long)funcAddress).Activate();
-                });
-
                 SigScan(sigs.FileErrorString, "FileErrorString", address =>
                 {
                     PatchAddress((nuint)address);
                     LogDebug("Patched Error String");
                 });
+
+                IntPtr createFileWAddress = GetProcAddress(GetModuleHandle("kernel32.dll"), "CreateFileW");
+
+                // Create the hook
+                _createFileWHook = _hooks.CreateHook<CreateFileWDelegate>(CreateFileW, createFileWAddress);
+                _createFileWHook.Activate();
             }
 
             _modLoader.ModLoading += ModLoading;
@@ -126,14 +130,43 @@ namespace DragonEssentials
             Log($"Loading files from {folder}");
         }
 
+        private static List<string> languages = new List<string> { "de", "en", "es", "fr", "it", "ja", "ko", "pt", "ru", "zh", "zhs", "pt" };
+
         private void AddRedirections(string modsPath)
         {
             foreach (var file in Directory.EnumerateFiles(modsPath, "*", SearchOption.AllDirectories))
             {
                 var modFilePath = Path.GetRelativePath(modsPath, file);
-                var gamePath = Path.Combine(GetGameDirectory(), "data", modFilePath); // recreate local path
-                _redirections[gamePath.ToLower().Replace('\\', '/')] = file.ToLower().Replace('\\', '/');
+                var gamePath = Path.Combine(GetGameDirectory(), "data", modFilePath); // recreate what the game would try to load
+
+                _redirections[processLanguageString(gamePath).Replace('\\', '/')] = file.ToLower().Replace('\\', '/');
+                _redirections[processLanguageString(gamePath)] = file.ToLower();
+
+                if (gamePath.Contains(".all"))
+                {
+                    var newPath = string.Empty;
+
+                    foreach (string lang in languages)
+                    {
+                        newPath = gamePath.Replace(".all", $"\\{lang}").ToLower();
+
+                        _redirections[newPath.Replace('\\', '/')] = file.ToLower().Replace('\\', '/');
+                        _redirections[newPath] = file.ToLower();
+                    }
+                }
             }
+        }
+
+        private string processLanguageString( string input )
+        {
+            foreach (string lang in languages)
+            {
+                if (input.Contains($".{lang}"))
+                {
+                    input = input.Replace($".{lang}", $"\\{lang}");
+                }
+            }
+            return input.ToLower();
         }
 
         private Signatures GetSignatures()
@@ -173,37 +206,32 @@ namespace DragonEssentials
 
             if (!target_file.Contains("data/")) return result;
 
-            // if (_configuration.FileAccessLog) Log($"GetPath1: - {target_file}");
+            if (_configuration.FileAccessLog) Log($"{target_file}");
 
             if (!TryFindLooseFile(target_file, out var looseFile)) return result;
 
             var memory = Memory.Instance;
             memory.SafeWrite((nuint)(file_path + ReplaceFilePathWithMod(file_path, looseFile.ToLower())), NullTermBytes);
 
-            LogDebug($"Redirected file to {looseFile}");
+            LogDebug($"GetPath1: Redirected file to {looseFile}");
 
             return result;
         } // currently this hook catches every normal game file EXCEPT dds files such as character model textures
 
-        private unsafe int GetPath2(nint file_path, uint a2, nint a3, nint a4)
+        private IntPtr CreateFileW( string lpFileName, uint dwDesiredAccess, uint dwShareMode, IntPtr lpSecurityAttributes, uint dwCreationDisposition, uint dwFlagsAndAttributes, IntPtr hTemplateFile)
         {
-            int result = 0;
+            // Log or modify the file name
+            if (_configuration.FileAccessLog) Log($"File opened: {lpFileName}");
 
-            string target_file = Marshal.PtrToStringAnsi(file_path);
+            if (TryFindLooseFile(lpFileName.ToLower(), out var looseFile))
+            {
+                LogDebug($"CreateFileW: Redirected file to {looseFile}");
+                return _createFileWHook.OriginalFunction(looseFile, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
+            }
 
-            if (!target_file.Contains(".dds")) return _getPath2Hook.OriginalFunction(file_path, a2, a3, a4);
-
-            if (_configuration.FileAccessLog) Log($"GetPath2: - {target_file}");
-
-            if (!TryFindLooseFile(target_file, out var looseFile)) return _getPath2Hook.OriginalFunction(file_path, a2, a3, a4);
-
-            var memory = Memory.Instance;
-            memory.SafeWrite((nuint)(file_path + ReplaceFilePathWithMod(file_path, looseFile.ToLower())), NullTermBytes);
-
-            LogDebug($"Redirected file to {looseFile.ToLower()}");
-
-            return _getPath2Hook.OriginalFunction(file_path, a2, a3, a4);
-        } // currently this hook seems non functional, DDS files go through here but modifying path seems to not have any effect
+            // Call the original function with the original parameters
+            return _createFileWHook.OriginalFunction(lpFileName, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
+        }
 
         unsafe static int ReplaceFilePathWithMod(nint target, string newString)
         {
@@ -216,11 +244,12 @@ namespace DragonEssentials
             return newString.Length + 1;
         }
 
-        static unsafe void WriteDataToAddress(nint address, Span<byte> data)
-        {
-            var memory = Memory.Instance;
-            memory.SafeWrite((nuint)address, data);
-        }
+        // Required imports for function address retrieval
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern IntPtr GetProcAddress(IntPtr hModule, string lpProcName);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern IntPtr GetModuleHandle(string lpModuleName);
 
         #region Standard Overrides
         public override void ConfigurationUpdated(Config configuration)
