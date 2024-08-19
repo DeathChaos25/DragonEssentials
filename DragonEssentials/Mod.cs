@@ -54,10 +54,10 @@ namespace DragonEssentials
 
         internal unsafe delegate nint GetPath1Delegate(nint file_path, uint a2, nint a3, nint a4);
         internal unsafe delegate int GetPath2Delegate(nint file_path, uint a2, nint a3, nint a4);
+        internal unsafe delegate int GetEntityPathDelegate(nint file_path, uint e_kind, uint stage_id, uint daynight, nint uid);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall, CharSet = CharSet.Unicode)]
-        public delegate IntPtr CreateFileWDelegate( string lpFileName, uint dwDesiredAccess, uint dwShareMode, IntPtr lpSecurityAttributes, uint dwCreationDisposition, uint dwFlagsAndAttributes, IntPtr hTemplateFile
-        );
+        public delegate IntPtr CreateFileWDelegate(string lpFileName, uint dwDesiredAccess, uint dwShareMode, IntPtr lpSecurityAttributes, uint dwCreationDisposition, uint dwFlagsAndAttributes, IntPtr hTemplateFile);
 
         /// <summary>
         /// The configuration of the currently executing mod.
@@ -67,6 +67,7 @@ namespace DragonEssentials
         private Dictionary<string, string> _redirectionsShort = new();
         private unsafe IHook<GetPath1Delegate> _getPath1Hook;
         private unsafe IHook<GetPath2Delegate> _getPath2Hook;
+        private unsafe IHook<GetEntityPathDelegate> _getEntityPathHook;
         private IHook<CreateFileWDelegate> _createFileWHook;
 
         private IDragonEssentials _api;
@@ -93,21 +94,27 @@ namespace DragonEssentials
 
             unsafe
             {
-                // Load files from our mod
+                
                 SigScan(sigs.GetPath1, "GetPath1", address =>
                 {
                     _getPath1Hook = _hooks.CreateHook<GetPath1Delegate>(GetPath1, address).Activate();
                 });
-                // Load files from our mod
-                SigScan(sigs.GetPath2, "GetPath2", address =>
+
+                SigScan(_configuration.isGamePass ? sigs.GetPath2X : sigs.GetPath2, "GetPath2", address =>
                 {
                     _getPath2Hook = _hooks.CreateHook<GetPath2Delegate>(GetPath2, address).Activate();
                 });
 
+                SigScan(sigs.GetEntityPath, "GetEntityPath", address =>
+                {
+                    _getEntityPathHook = _hooks.CreateHook<GetEntityPathDelegate>(GetEntityPath, address).Activate();
+                });
+
                 SigScan(sigs.FileErrorString, "FileErrorString", address =>
                 {
-                    PatchAddress((nuint)address);
-                    LogDebug("Patched Error String");
+                    byte[] bytes = new byte[] { 0x25, 0x73, 0x00, 0x00 };
+                    var memory = Memory.Instance;
+                    memory.SafeWrite((nuint)address, bytes);
                 });
 
                 SigScan(sigs.UbikPathString, "UbikPathString", address =>
@@ -118,8 +125,6 @@ namespace DragonEssentials
                 });
 
                 IntPtr createFileWAddress = GetProcAddress(GetModuleHandle("kernel32.dll"), "CreateFileW");
-
-                // Create the hook
                 _createFileWHook = _hooks.CreateHook<CreateFileWDelegate>(CreateFileW, createFileWAddress).Activate();
             }
 
@@ -246,6 +251,24 @@ namespace DragonEssentials
             else return result;
         }
 
+        private unsafe int GetEntityPath(nint file_path, uint e_kind, uint stage_id, uint daynight, nint uid)
+        {
+            int result = _getEntityPathHook.OriginalFunction(file_path, e_kind, stage_id, daynight, uid);
+
+            string target_file = Marshal.PtrToStringAnsi(file_path);
+
+            LogAccess($"4 - {target_file}");
+
+            if (!TryFindLooseFileShort(target_file, out var looseFile)) return result;
+
+            LogRedirect($"GetEntityPath: Redirected file to {looseFile}");
+
+            var memory = Memory.Instance;
+            memory.SafeWrite((nuint)(file_path + ReplaceFilePathWithMod(file_path, looseFile.ToLower())), NullTermBytes);
+
+            return 0;
+        }
+
         private IntPtr CreateFileW( string lpFileName, uint dwDesiredAccess, uint dwShareMode, IntPtr lpSecurityAttributes, uint dwCreationDisposition, uint dwFlagsAndAttributes, IntPtr hTemplateFile)
         {
             // if (!lpFileName.EndsWith(".dds")) return _createFileWHook.OriginalFunction(lpFileName, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
@@ -297,6 +320,8 @@ namespace DragonEssentials
         #endregion
 
         #region For Exports, Serialization etc.
+        public Type[] GetTypes() => new[] { typeof(IDragonEssentials) };
+
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public Mod() { }
 #pragma warning restore CS8618

@@ -10,9 +10,10 @@ namespace DragonEssentials
     {
         internal string FileErrorString { get; set; }
         internal string UbikPathString { get; set; }
+        internal string GetEntityPath { get; set; }
         internal string GetPath1 { get; set; }
         internal string GetPath2 { get; set; }
-        internal string GetPath1X { get; set; }
+        internal string GetPath2X { get; set; }
         // To find the GetPath1 address, look for shader filepath construction string,
         // i.e. "data/shader/aston_shader_%s.par"
         // find whatever function this string is being given to, and go into that function
@@ -29,6 +30,8 @@ namespace DragonEssentials
                     UbikPathString = "64 61 74 61 2F 63 68 61 72 61 2F 75 62 69 6B 2F",
                     GetPath1 = "48 89 5C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 8B FA 48 8B D9 48 8B 15 ?? ?? ?? ??",
                     GetPath2 = "48 8B C4 4C 89 48 ?? 89 50 ?? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC 58 02 00 00",
+                    GetPath2X = "48 8B C4 55 53 56 57 41 54 41 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC 88 02 00 00",
+                    GetEntityPath = "48 89 5C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 0F B7 F2 48 8B F9",
                 }
             },
             {

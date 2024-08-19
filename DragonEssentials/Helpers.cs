@@ -23,6 +23,20 @@ namespace DragonEssentials
                     input = input.Replace($".{lang}", $"\\{lang}");
                 }
             }
+
+            if (input.Contains("entity_elvis"))
+            {
+                input = input.Replace("entity_elvis", "entity");
+            }
+            else if (input.Contains("entity_aston"))
+            {
+                input = input.Replace("entity_aston", "entity");
+            }
+            else if (input.Contains("entity_yazawa"))
+            {
+                input = input.Replace("entity_yazawa", "entity");
+            }
+
             return input.ToLower();
         }
 
