@@ -5,6 +5,7 @@ using Reloaded.Hooks.ReloadedII.Interfaces;
 using Reloaded.Mod.Interfaces;
 using Reloaded.Mod.Interfaces.Internal;
 using static DragonEssentials.Utils;
+using static DragonEssentials.Helpers;
 using Reloaded.Memory;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -109,6 +110,13 @@ namespace DragonEssentials
                     LogDebug("Patched Error String");
                 });
 
+                SigScan(sigs.UbikPathString, "UbikPathString", address =>
+                {
+                    byte[] NewUBIKHex = new byte[] { 0x75, 0x62, 0x69, 0x6B, 0x5F, 0x72, 0x65, 0x64, 0x69, 0x72, 0x65, 0x63, 0x74, 0x2F, 0x00, 0x00 };
+                    var memory = Memory.Instance;
+                    memory.SafeWrite((nuint)address, NewUBIKHex);
+                });
+
                 IntPtr createFileWAddress = GetProcAddress(GetModuleHandle("kernel32.dll"), "CreateFileW");
 
                 // Create the hook
@@ -138,12 +146,19 @@ namespace DragonEssentials
             Log($"Loading files from {folder}");
         }
 
-        private static List<string> languages = new List<string> { "de", "en", "es", "fr", "it", "ja", "ko", "pt", "ru", "zh", "zhs", "pt" };
-
         private void AddRedirections(string modsPath)
         {
+            var modPath = new DirectoryInfo(_modLoader.GetDirectoryForModId(_modConfig.ModId));
+            GetOriginalUBIKFiles(modPath.FullName);
+
             foreach (var file in Directory.EnumerateFiles(modsPath, "*", SearchOption.AllDirectories))
             {
+                if (Path.GetExtension(file).Equals(".ubik", StringComparison.OrdinalIgnoreCase))
+                {
+                    CopyUBIKFile(file);
+                    continue;
+                }
+
                 var modFilePath = Path.GetRelativePath(modsPath, file);
                 var gamePath = Path.Combine(GetGameDirectory(), "data", modFilePath); // recreate what the game would try to load
                 var localPath = Path.Combine("data", modFilePath); // recreate what the game would try to load
@@ -171,16 +186,14 @@ namespace DragonEssentials
             }
         }
 
-        private string processLanguageString( string input )
+        private bool TryFindLooseFile(string gameFilePath, out string? looseFile)
         {
-            foreach (string lang in languages)
-            {
-                if (input.Contains($".{lang}"))
-                {
-                    input = input.Replace($".{lang}", $"\\{lang}");
-                }
-            }
-            return input.ToLower();
+            return _redirections.TryGetValue(gameFilePath, out looseFile);
+        }
+
+        private bool TryFindLooseFileShort(string gameFilePath, out string? looseFile)
+        {
+            return _redirectionsShort.TryGetValue(gameFilePath, out looseFile);
         }
 
         private Signatures GetSignatures()
@@ -191,32 +204,6 @@ namespace DragonEssentials
             if (Signatures.VersionSigs.TryGetValue(GetExecutableName().ToLower(), out var sigs))
                 return sigs;
             else throw new Exception($"Unable to find Signatures for game {fileName}");
-        }
-
-        string GetExecutableName()
-        {
-            var CurrentProcess = Process.GetCurrentProcess();
-            var mainModule = CurrentProcess.MainModule;
-            return Path.GetFileName(mainModule!.FileName);
-        }
-
-        string GetGameDirectory()
-        {
-            var CurrentProcess = Process.GetCurrentProcess();
-            var mainModule = CurrentProcess.MainModule;
-            string returnval = Path.GetDirectoryName(mainModule!.FileName);
-            // LogDebug($"Game base directory is {returnval}");
-            return returnval;
-        }
-
-        private bool TryFindLooseFile(string gameFilePath, out string? looseFile)
-        {
-            return _redirections.TryGetValue(gameFilePath, out looseFile);
-        }
-
-        private bool TryFindLooseFileShort(string gameFilePath, out string? looseFile)
-        {
-            return _redirectionsShort.TryGetValue(gameFilePath, out looseFile);
         }
 
         private unsafe nint GetPath1(nint file_path, uint a2, nint a3, nint a4)
@@ -234,7 +221,7 @@ namespace DragonEssentials
             var memory = Memory.Instance;
             memory.SafeWrite((nuint)(file_path + ReplaceFilePathWithMod(file_path, looseFile.ToLower())), NullTermBytes);
 
-            LogDebug($"GetPath1: Redirected file to {looseFile}");
+            LogRedirect($"GetPath1: Redirected file to {looseFile}");
 
             return result;
         } // currently this hook catches every normal game file EXCEPT dds files such as character model textures
@@ -252,7 +239,7 @@ namespace DragonEssentials
 
                 if (!TryFindLooseFileShort(target_file, out var looseFile)) return result;
 
-                LogDebug($"GetPath2: Redirected file to {looseFile}");
+                LogRedirect($"GetPath2: Redirected file to {looseFile}");
 
                 return ReplaceFilePathWithMod(file_path, looseFile.ToLower());
             }
@@ -273,7 +260,7 @@ namespace DragonEssentials
 
             if (TryFindLooseFile(lpFileName.ToLower(), out var looseFile))
             {
-                LogDebug($"CreateFileW: Redirected file to {looseFile}");
+                LogRedirect($"CreateFileW: Redirected file to {looseFile}");
                 return _createFileWHook.OriginalFunction(looseFile, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
             }
 

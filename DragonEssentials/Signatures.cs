@@ -26,7 +26,7 @@ namespace DragonEssentials
                 new Signatures
                 {
                     FileErrorString = "66 69 6c 65 20 65 72 72 6f 72 20 3c 25 73 3e",
-                    UbikPathString = "64 61 74 61 2f 63 68 61 72 61 2f 75 62 69 6b 2f 00",
+                    UbikPathString = "64 61 74 61 2F 63 68 61 72 61 2F 75 62 69 6B 2F",
                     GetPath1 = "48 89 5C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 8B FA 48 8B D9 48 8B 15 ?? ?? ?? ??",
                     GetPath2 = "48 8B C4 4C 89 48 ?? 89 50 ?? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC 58 02 00 00",
                 }
@@ -37,6 +37,7 @@ namespace DragonEssentials
                 {
                     GetPath1 = "48 89 5C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 8B FA 48 8B D9 48 8B 15 ?? ?? ?? ??",
                     GetPath2 = "48 8B C4 4C 89 48 ?? 89 50 ?? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC 58 02 00 00",
+                    UbikPathString = "64 61 74 61 2F 63 68 61 72 61 2F 75 62 69 6B 2F",
                 }
             },
             {
@@ -45,6 +46,8 @@ namespace DragonEssentials
                 {
                     FileErrorString = "66 69 6c 65 20 65 72 72 6f 72 20 3c 25 73 3e",
                     GetPath1 = "48 89 5C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 8B FA 48 8B D9 48 8B 15 ?? ?? ?? ??",
+                    GetPath2 = "48 8B C4 4C 89 48 ?? 89 50 ?? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC 58 02 00 00",
+                    UbikPathString = "64 61 74 61 2F 63 68 61 72 61 2F 75 62 69 6B 2F",
                 }
             },
         };

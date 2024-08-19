@@ -47,6 +47,12 @@ namespace DragonEssentials
                 _logger.WriteLineAsync($"[Dragon Essentials] {message}");
         }
 
+        internal static void LogRedirect(string message)
+        {
+            if (_config.RedirectLog)
+                _logger.WriteLineAsync($"[Dragon Essentials] {message}");
+        }
+
         internal static void Log(string message)
         {
             _logger.WriteLineAsync($"[Dragon Essentials] {message}");

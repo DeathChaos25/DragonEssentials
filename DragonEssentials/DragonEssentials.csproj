@@ -40,6 +40,15 @@
     <None Update="Preview.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="ubik\likeadragon8.zlib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ubik\likeadragongaiden.zlib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ubik\lostjudgment.zlib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -53,5 +62,12 @@
   <ItemGroup>
     <ProjectReference Include="..\DragonEssentials.Interfaces\DragonEssentials.Interfaces.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ubik\" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  </Target>
 
 </Project>

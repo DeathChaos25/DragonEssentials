@@ -4,6 +4,10 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>DeathChaos</Authors>
+    <PackageProjectUrl>https://github.com/DeathChaos25/DragonEssentials</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/DeathChaos25/DragonEssentials</RepositoryUrl>
   </PropertyGroup>
 
 </Project>
