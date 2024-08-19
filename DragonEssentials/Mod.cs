@@ -22,7 +22,7 @@ namespace DragonEssentials
     /// <summary>
     /// Your mod logic goes here.
     /// </summary>
-    public class Mod : ModBase // <= Do not Remove.
+    public class Mod : ModBase, IExports // <= Do not Remove.
     {
         private byte[] NullTermBytes = new byte[] { 0x00, 0x00 };
 
