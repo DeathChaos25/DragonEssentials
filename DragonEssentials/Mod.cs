@@ -219,7 +219,7 @@ namespace DragonEssentials
 
             if (!target_file.Contains("data/")) return result;
 
-            LogAccess($"1 - {target_file}");
+            // LogAccess($"1 - {target_file}");
 
             if (!TryFindLooseFile(target_file, out var looseFile)) return result;
 
@@ -276,9 +276,16 @@ namespace DragonEssentials
             // Log or modify the file name
             LogAccess($"2 - {lpFileName}");
 
-            if (lpFileName.Contains("dragonessentials") && File.Exists(lpFileName.Replace(GetGameDirectory() + "\\", "").ToLower()))
+            if (lpFileName.Contains("dragonessentials") || lpFileName.EndsWith(".dds"))
             {
-                lpFileName = lpFileName.Replace(GetGameDirectory() + "\\", "").ToLower();
+                lpFileName = lpFileName.ToLower();
+
+                var targetFile = GetGameDirectory().ToLower().Replace('\\', '/') + '/';
+
+                if (File.Exists(lpFileName.Replace('\\', '/').Replace(targetFile, "").ToLower()))
+                {
+                    lpFileName = lpFileName.Replace('\\', '/').Replace(targetFile, "").ToLower();
+                }
             }
 
             if (TryFindLooseFile(lpFileName.ToLower(), out var looseFile))
