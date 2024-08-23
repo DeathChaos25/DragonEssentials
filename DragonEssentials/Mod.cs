@@ -96,7 +96,7 @@ namespace DragonEssentials
             unsafe
             {
                 
-                SigScan(sigs.GetPath1, "GetPath1", address =>
+                SigScan(sigs.Get_VPath, "GetPath1", address =>
                 {
                     _getPath1Hook = _hooks.CreateHook<GetPath1Delegate>(GetPath1, address).Activate();
                 });
