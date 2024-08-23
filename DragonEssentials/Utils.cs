@@ -86,7 +86,7 @@ namespace DragonEssentials
             }
             else
             {
-                LogError($"{name} doesn't exist, stuff won't work :(");
+                LogError($"{name} not used in this game");
             }
         }
 

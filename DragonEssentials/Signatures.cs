@@ -11,6 +11,7 @@ namespace DragonEssentials
         internal string FileErrorString { get; set; }
         internal string UbikPathString { get; set; }
         internal string GetEntityPath { get; set; }
+        internal string GetEntityPathX { get; set; }
         internal string GetPath1 { get; set; }
         internal string GetPath2 { get; set; }
         internal string GetPath2X { get; set; }
@@ -32,6 +33,7 @@ namespace DragonEssentials
                     GetPath2 = "48 8B C4 4C 89 48 ?? 89 50 ?? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC 58 02 00 00",
                     GetPath2X = "48 8B C4 55 53 56 57 41 54 41 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC 88 02 00 00",
                     GetEntityPath = "48 89 5C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 0F B7 F2 48 8B F9",
+                    GetEntityPathX = "48 89 5C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 0F B7 F2 48 8B F9",
                 }
             },
             {
@@ -40,6 +42,9 @@ namespace DragonEssentials
                 {
                     GetPath1 = "48 89 5C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 8B FA 48 8B D9 48 8B 15 ?? ?? ?? ??",
                     GetPath2 = "48 8B C4 4C 89 48 ?? 89 50 ?? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC 58 02 00 00",
+                    GetPath2X = "48 8B C4 55 53 56 57 41 54 41 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC 88 02 00 00",
+                    GetEntityPath = "48 89 5C 24 ?? 48 89 74 24 ?? 48 89 7C 24 ?? 41 56 48 83 EC 20 44 89 C7 48 89 CB",
+                    GetEntityPathX = "48 89 5C 24 ?? 48 89 74 24 ?? 48 89 7C 24 ?? 41 56 48 83 EC 20 44 89 C7 48 89 CB",
                     UbikPathString = "64 61 74 61 2F 63 68 61 72 61 2F 75 62 69 6B 2F",
                 }
             },
@@ -50,6 +55,9 @@ namespace DragonEssentials
                     FileErrorString = "66 69 6c 65 20 65 72 72 6f 72 20 3c 25 73 3e",
                     GetPath1 = "48 89 5C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 8B FA 48 8B D9 48 8B 15 ?? ?? ?? ??",
                     GetPath2 = "48 8B C4 4C 89 48 ?? 89 50 ?? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC 58 02 00 00",
+                    GetPath2X = "48 8B C4 4C 89 48 ?? 89 50 ?? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC 58 02 00 00",
+                    GetEntityPath = "48 89 5C 24 ?? 48 89 74 24 ?? 48 89 7C 24 ?? 41 56 48 83 EC 20 41 8B F8 48 8B D9",
+                    GetEntityPathX = "48 89 5C 24 ?? 48 89 74 24 ?? 48 89 7C 24 ?? 41 56 48 83 EC 20 41 8B F8 48 8B D9",
                     UbikPathString = "64 61 74 61 2F 63 68 61 72 61 2F 75 62 69 6B 2F",
                 }
             },

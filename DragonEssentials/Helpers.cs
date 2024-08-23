@@ -11,7 +11,7 @@ namespace DragonEssentials
 {
     internal unsafe class Helpers
     {
-        static string newUBIKPath = Path.Combine(GetGameDirectory().ToLower(), "ubik_redirect/");
+        static string newUBIKPath = Path.Combine(GetGameDirectory().ToLower(), "ubik_redirect\\");
 
         internal static List<string> languages = new List<string> { "de", "en", "es", "fr", "it", "ja", "ko", "pt", "ru", "zh", "zhs", "pt" };
         internal static string processLanguageString(string input)

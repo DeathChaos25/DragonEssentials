@@ -55,6 +55,7 @@ namespace DragonEssentials
         internal unsafe delegate nint GetPath1Delegate(nint file_path, uint a2, nint a3, nint a4);
         internal unsafe delegate int GetPath2Delegate(nint file_path, uint a2, nint a3, nint a4);
         internal unsafe delegate int GetEntityPathDelegate(nint file_path, uint e_kind, uint stage_id, uint daynight, nint uid);
+        internal bool hasExtractedUBIK = false;
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall, CharSet = CharSet.Unicode)]
         public delegate IntPtr CreateFileWDelegate(string lpFileName, uint dwDesiredAccess, uint dwShareMode, IntPtr lpSecurityAttributes, uint dwCreationDisposition, uint dwFlagsAndAttributes, IntPtr hTemplateFile);
@@ -105,7 +106,7 @@ namespace DragonEssentials
                     _getPath2Hook = _hooks.CreateHook<GetPath2Delegate>(GetPath2, address).Activate();
                 });
 
-                SigScan(sigs.GetEntityPath, "GetEntityPath", address =>
+                SigScan(_configuration.isGamePass ? sigs.GetEntityPathX : sigs.GetEntityPath, "GetEntityPath", address =>
                 {
                     _getEntityPathHook = _hooks.CreateHook<GetEntityPathDelegate>(GetEntityPath, address).Activate();
                 });
@@ -154,7 +155,11 @@ namespace DragonEssentials
         private void AddRedirections(string modsPath)
         {
             var modPath = new DirectoryInfo(_modLoader.GetDirectoryForModId(_modConfig.ModId));
-            GetOriginalUBIKFiles(modPath.FullName);
+            if (!hasExtractedUBIK)
+            {
+                GetOriginalUBIKFiles(modPath.FullName);
+                hasExtractedUBIK = true;
+            }
 
             foreach (var file in Directory.EnumerateFiles(modsPath, "*", SearchOption.AllDirectories))
             {
@@ -274,7 +279,7 @@ namespace DragonEssentials
             // if (!lpFileName.EndsWith(".dds")) return _createFileWHook.OriginalFunction(lpFileName, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
 
             // Log or modify the file name
-            LogAccess($"2 - {lpFileName}");
+            // LogAccess($"2 - {lpFileName}");
 
             if (lpFileName.Contains("dragonessentials") || lpFileName.EndsWith(".dds"))
             {
