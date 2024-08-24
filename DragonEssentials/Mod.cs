@@ -16,6 +16,7 @@ using System.Text;
 using Reloaded.Memory.Interfaces;
 using System.Net;
 using System.Security.Cryptography;
+using CriFs.V2.Hook.Interfaces;
 
 namespace DragonEssentials
 {
@@ -134,6 +135,14 @@ namespace DragonEssentials
             // Expose API
             _api = new Api(AddFolder);
             _modLoader.AddOrReplaceController(context.Owner, _api);
+
+            var criFsController = _modLoader.GetController<ICriFsRedirectorApi>();
+            if (criFsController == null || !criFsController.TryGetTarget(out var criFsApi))
+            {
+                LogError("Unable to load CriFS V2 Library Hooks!");
+                return;
+            }
+            else criFsApi.AddProbingPath("Criware");
         }
 
         private void ModLoading(IModV1 mod, IModConfigV1 modConfig)
@@ -243,7 +252,8 @@ namespace DragonEssentials
             string target_file = Marshal.PtrToStringAnsi(file_path);
 
             if (target_file.EndsWith(".dds") || target_file.Contains("auth")
-                || target_file.Contains("hact") )
+                || target_file.Contains("hact") || target_file.EndsWith(".acb") 
+                || target_file.EndsWith(".awb") || target_file.EndsWith(".usm") )
             {
                 LogAccess($"3 - {target_file}");
 

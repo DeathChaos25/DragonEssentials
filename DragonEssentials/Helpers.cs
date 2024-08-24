@@ -42,19 +42,22 @@ namespace DragonEssentials
 
         internal static void GetOriginalUBIKFiles(string modPath)
         {
-            LogDebug($"New ubik dir target is {newUBIKPath}");
-
-            if (Directory.Exists(newUBIKPath))
-            {
-                Directory.Delete(newUBIKPath, true);
-                // clear out directory and remake it
-            }
-
-            Directory.CreateDirectory(newUBIKPath);
-
             var originalUBIKFiles = Path.Combine(modPath, "ubik", GetExecutableName().Replace(".exe", ".zlib"));
-            DecompressZlibFile(originalUBIKFiles, newUBIKPath);
-            LogDebug($"Extracting original UBIK from {originalUBIKFiles} into {newUBIKPath}");
+            if (File.Exists(originalUBIKFiles))
+            {
+                LogDebug($"New ubik dir target is {newUBIKPath}");
+
+                if (Directory.Exists(newUBIKPath))
+                {
+                    Directory.Delete(newUBIKPath, true);
+                    // clear out directory and remake it
+                }
+
+                Directory.CreateDirectory(newUBIKPath);
+
+                DecompressZlibFile(originalUBIKFiles, newUBIKPath);
+                LogDebug($"Extracting original UBIK from {originalUBIKFiles} into {newUBIKPath}");
+            }
         }
 
         internal static void CopyUBIKFile(string filePath)

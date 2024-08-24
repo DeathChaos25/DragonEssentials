@@ -16,7 +16,8 @@
   "IsUniversalMod": false,
   "ModDependencies": [
     "Reloaded.Memory.SigScan.ReloadedII",
-    "reloaded.sharedlib.hooks"
+    "reloaded.sharedlib.hooks",
+    "crifs.v2.hook"
   ],
   "OptionalDependencies": [],
   "SupportedAppId": [

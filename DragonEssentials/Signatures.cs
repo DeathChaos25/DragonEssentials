@@ -55,7 +55,7 @@ namespace DragonEssentials
                 }
             },
             {
-                "LostJudgment.exe", // Lost Judgment
+                "lostjudgment.exe", // Lost Judgment
                 new Signatures
                 {
                     Get_VPath = "48 89 5C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 8B FA 48 8B D9 48 8B 15 ?? ?? ?? ??",
@@ -67,7 +67,7 @@ namespace DragonEssentials
                 }
             },
             {
-                "Judgment.exe", // Judge Eyes
+                "judgment.exe", // Judge Eyes
                 new Signatures
                 {
                     Get_VPath = "48 89 5C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 8B FA 48 8B D9 48 8B 15 ?? ?? ?? ??",
@@ -78,7 +78,7 @@ namespace DragonEssentials
                 }
             },
             {
-                "BinaryDomain.exe", // Binary Domain
+                "binarydomain.exe", // Binary Domain
                 new Signatures
                 {
                     Get_VPath = "56 68 04 01 00 00 FF 15 ?? ?? ?? ??",
