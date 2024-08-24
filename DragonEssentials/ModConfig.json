@@ -10,21 +10,31 @@
   "ModR2RManagedDll64": "x64/DragonEssentials.dll",
   "ModNativeDll32": "",
   "ModNativeDll64": "",
+  "Tags": [],
+  "CanUnload": null,
+  "HasExports": null,
   "IsLibrary": true,
   "ReleaseMetadataFileName": "DragonEssentials.ReleaseMetadata.json",
-  "PluginData": {},
+  "PluginData": {
+    "GitHubRelease": {
+      "UserName": "DeathChaos25",
+      "RepositoryName": "https://github.com/DeathChaos25/DragonEssentials",
+      "UseReleaseTag": true,
+      "AssetFileName": "Mod.zip"
+    }
+  },
   "IsUniversalMod": false,
   "ModDependencies": [
+    "crifs.v2.hook",
     "Reloaded.Memory.SigScan.ReloadedII",
-    "reloaded.sharedlib.hooks",
-    "crifs.v2.hook"
+    "reloaded.sharedlib.hooks"
   ],
   "OptionalDependencies": [],
   "SupportedAppId": [
-    "likeadragon8.exe",
-    "likeadragongaiden.exe",
     "judgment.exe",
-    "lostjudgment.exe"
+    "likeadragongaiden.exe",
+    "lostjudgment.exe",
+    "likeadragon8.exe"
   ],
-  "ProjectUrl": ""
+  "ProjectUrl": "https://github.com/DeathChaos25/DragonEssentials"
 }

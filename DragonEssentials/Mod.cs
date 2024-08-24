@@ -74,8 +74,6 @@ namespace DragonEssentials
 
         private IDragonEssentials _api;
 
-        private string _modsPath;
-
         public Mod(ModContext context)
         {
             _modLoader = context.ModLoader;
@@ -86,10 +84,6 @@ namespace DragonEssentials
             _modConfig = context.ModConfig;
 
             Initialise(_logger, _configuration, _modLoader);
-
-            // Setup mods path
-            var modPath = new DirectoryInfo(_modLoader.GetDirectoryForModId(_modConfig.ModId));
-            _modsPath = modPath.Parent!.FullName;
 
             // Get Signatures
             var sigs = GetSignatures();
