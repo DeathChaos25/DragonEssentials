@@ -36,6 +36,14 @@ namespace DragonEssentials
             {
                 input = input.Replace("entity_yazawa", "entity");
             }
+            else if (input.Contains("entity_judge"))
+            {
+                input = input.Replace("entity_judge", "entity");
+            }
+            else if (input.Contains("entity_coyote"))
+            {
+                input = input.Replace("entity_coyote", "entity");
+            }
 
             return input.ToLower();
         }
