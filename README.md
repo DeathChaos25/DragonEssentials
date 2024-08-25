@@ -1,9 +1,15 @@
 # DragonEssentials
 A "modloader" mod for [Reloaded-II](https://reloaded-project.github.io/Reloaded-II/) that makes it easy for other mods to replace or load new files files in Dragon Engine's Yakuza/Like a Dragon games.  
+Makes use of [CRI FileSystem V2 Hook](https://github.com/Sewer56/CriFs.V2.Hook.ReloadedII/releases) as a dependency for Criware support in games such as Judgment and Lost Judgment.
 
-## WARNING  
-- Currently this will successfully load and replace most of the game files, including loose files such as .USM files
-- Currently this does not yet fully support all Dragon Engine games. Support is slowly being added and only LAD:IW and Gaiden have been very thoroughly tested, although the same code is shared across all games which should mean they would all work just as well despite not being as thoroughly tested.
+## Currently Supported Games
+- Like a Dragon: Infinite Wealth
+- Like a Dragon: Gaiden  
+- Judgment
+- Lost Judgment
+- Yakuza 6: Song of Life
+
+  (Note: Only LAD:IW and Gaiden have been fully thoroughly tested)
 
 ## Features
 - Loading loose files from PAR
@@ -14,6 +20,8 @@ A "modloader" mod for [Reloaded-II](https://reloaded-project.github.io/Reloaded-
 - Being a Reloaded-II mod means it can be used alongside other great Reloaded-II specific frameworks [such as Ryo](https://github.com/T-PoseRatkechi/Ryo).
 
 ## Planned Features
+- Yakuza Kiwami 2 support
+- Yakuza: Like a Dragon support
 - Microsoft Store support (Gamepass)
 - (Unknown how different GOG version is from Steam executable)
 - TBD
