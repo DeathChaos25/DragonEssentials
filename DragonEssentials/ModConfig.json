@@ -2,7 +2,7 @@
   "ModId": "DragonEssentials",
   "ModName": "Dragon Essentials",
   "ModAuthor": "DeathChaos",
-  "ModVersion": "1.0.0",
+  "ModVersion": "0.9.0",
   "ModDescription": "Allows other mods to easily replace files inside of the PAR files in Dragon Engine Yakuza games",
   "ModDll": "DragonEssentials.dll",
   "ModIcon": "Preview.png",
