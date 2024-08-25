@@ -1,5 +1,6 @@
 # DragonEssentials
 A "modloader" mod for [Reloaded-II](https://reloaded-project.github.io/Reloaded-II/) that makes it easy for other mods to replace or load new files files in Dragon Engine's Yakuza/Like a Dragon games.  
+Makes use of [CRI FileSystem V2 Hook](https://github.com/Sewer56/CriFs.V2.Hook.ReloadedII/releases) as a dependency for Criware support in games such as Judgment and Lost Judgment.
 
 ## Currently Supported Games
 - Like a Dragon: Infinite Wealth
