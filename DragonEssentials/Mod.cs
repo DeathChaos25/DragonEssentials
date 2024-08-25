@@ -172,12 +172,14 @@ namespace DragonEssentials
                     continue;
                 }
 
-                var modFilePath = Path.GetRelativePath(modsPath, file);
-                var gamePath = Path.Combine(GetGameDirectory(), "data", modFilePath); // recreate what the game would try to load
-                var localPath = Path.Combine("data", modFilePath); // recreate what the game would try to load
+                var modFilePath = Path.GetRelativePath(modsPath, file).ToLower();
+                var gamePath = Path.Combine(GetGameDirectory(), "data", modFilePath).ToLower(); // recreate what the game would try to load
+                var localPath = Path.Combine("data", modFilePath).ToLower(); // recreate what the game would try to load
 
                 _redirections[processLanguageString(gamePath).Replace('\\', '/')] = file.ToLower().Replace('\\', '/');
                 _redirections[processLanguageString(gamePath)] = file.ToLower();
+
+                LogDebug($"Adding {file.ToLower()} as {gamePath}");
 
                 _redirectionsShort[processLanguageString(localPath)] = file.ToLower();
                 _redirectionsShort[processLanguageString(localPath).Replace('\\', '/')] = file.ToLower().Replace('\\', '/');
@@ -247,7 +249,7 @@ namespace DragonEssentials
 
             if (target_file.EndsWith(".dds") || target_file.Contains("auth")
                 || target_file.Contains("hact") || target_file.EndsWith(".acb") 
-                || target_file.EndsWith(".awb") || target_file.EndsWith(".usm") )
+                || target_file.EndsWith(".awb") )
             {
                 LogAccess($"3 - {target_file}");
 
