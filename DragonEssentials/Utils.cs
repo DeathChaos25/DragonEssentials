@@ -58,9 +58,9 @@ namespace DragonEssentials
             _logger.WriteLineAsync($"[Dragon Essentials] {message}");
         }
 
-        internal static void LogError(string message, Exception e)
+        internal static void LogWarning(string message)
         {
-            _logger.WriteLineAsync($"[Dragon Essentials] {message}: {e.Message}", System.Drawing.Color.Red);
+            _logger.WriteLineAsync($"[Dragon Essentials] {message}", System.Drawing.Color.Yellow);
         }
 
         internal static void LogError(string message)
@@ -86,7 +86,7 @@ namespace DragonEssentials
             }
             else
             {
-                LogError($"{name} not used in this game");
+                LogWarning($"{name} not used in this game");
             }
         }
 
