@@ -18,8 +18,8 @@
   "PluginData": {
     "GitHubRelease": {
       "UserName": "DeathChaos25",
-      "RepositoryName": "https://github.com/DeathChaos25/DragonEssentials",
-      "UseReleaseTag": true,
+      "RepositoryName": "DragonEssentials",
+      "UseReleaseTag": false,
       "AssetFileName": "Mod.zip"
     }
   },
