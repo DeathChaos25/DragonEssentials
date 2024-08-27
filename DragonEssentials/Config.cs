@@ -10,11 +10,11 @@ namespace DragonEssentials.Configuration
         [Description("Logs to the console whenever the game opens a file")]
         [DefaultValue(false)]
         public bool FileAccessLog { get; set; } = false;
+
         [DisplayName("Log File Redirects")]
         [Description("Logs to the console whenever a game file is redirected to a mod file")]
         [DefaultValue(false)]
         public bool RedirectLog { get; set; } = false;
-
 
         [DisplayName("Debug Mode")]
         [Description("Logs additional information to the console that is useful for debugging.")]
