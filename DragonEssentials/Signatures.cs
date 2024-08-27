@@ -84,6 +84,16 @@ namespace DragonEssentials
                 }
             },
             {
+                "yakuzalikeadragon.exe", // Yakuza: Like a Dragon
+                new Signatures
+                {
+                    GetPath2 = "48 8B C4 4C 89 48 ?? 89 50 ?? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC 58 02 00 00",
+                    GetPath2X = "48 8B C4 4C 89 48 ?? 89 50 ?? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC 58 02 00 00",
+                    GetEntityPath = "48 89 5C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 0F B7 FA 48 8B F1",
+                    GetEntityPathX = "48 89 5C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 0F B7 FA 48 8B F1",
+                }
+            },
+            {
                 "binarydomain.exe", // Binary Domain
                 new Signatures
                 {
