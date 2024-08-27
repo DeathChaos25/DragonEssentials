@@ -22,7 +22,6 @@ Makes use of [CRI FileSystem V2 Hook](https://github.com/Sewer56/CriFs.V2.Hook.R
 
 ## Planned Features
 - Yakuza Kiwami 2 support
-- Yakuza: Like a Dragon support
 - Microsoft Store support (Gamepass)
 - (Unknown how different GOG version is from Steam executable)
 - TBD
