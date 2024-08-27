@@ -3,11 +3,12 @@ A "modloader" mod for [Reloaded-II](https://reloaded-project.github.io/Reloaded-
 Makes use of [CRI FileSystem V2 Hook](https://github.com/Sewer56/CriFs.V2.Hook.ReloadedII/releases) as a dependency for Criware support in games such as Judgment and Lost Judgment.
 
 ## Currently Supported Games
-- Like a Dragon: Infinite Wealth
-- Like a Dragon: Gaiden  
-- Judgment
-- Lost Judgment
 - Yakuza 6: Song of Life
+- Judgment
+- Yakuza: Like a Dragon
+- Lost Judgment
+- Like a Dragon: Gaiden  
+- Like a Dragon: Infinite Wealth
 
   (Note: Only LAD:IW and Gaiden have been fully thoroughly tested)
 
