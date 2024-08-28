@@ -3,10 +3,11 @@ A "modloader" mod for [Reloaded-II](https://reloaded-project.github.io/Reloaded-
 Makes use of [CRI FileSystem V2 Hook](https://github.com/Sewer56/CriFs.V2.Hook.ReloadedII/releases) as a dependency for Criware support in games such as Judgment and Lost Judgment.
 
 ## Currently Supported Games
-- Yakuza 6: Song of Life
 - Judgment
-- Yakuza: Like a Dragon
 - Lost Judgment
+- Yakuza Kiwami 2
+- Yakuza 6: Song of Life
+- Yakuza: Like a Dragon
 - Like a Dragon: Gaiden  
 - Like a Dragon: Infinite Wealth
 
@@ -21,7 +22,6 @@ Makes use of [CRI FileSystem V2 Hook](https://github.com/Sewer56/CriFs.V2.Hook.R
 - Being a Reloaded-II mod means it can be used alongside other great Reloaded-II specific frameworks [such as Ryo](https://github.com/T-PoseRatkechi/Ryo).
 
 ## Planned Features
-- Yakuza Kiwami 2 support
 - Microsoft Store support (Gamepass)
 - (Unknown how different GOG version is from Steam executable)
 - TBD
