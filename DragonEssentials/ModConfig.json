@@ -2,7 +2,7 @@
   "ModId": "DragonEssentials",
   "ModName": "Dragon Essentials",
   "ModAuthor": "DeathChaos",
-  "ModVersion": "0.9.6",
+  "ModVersion": "1.0.0",
   "ModDescription": "Allows other mods to easily replace files inside of the PAR files in Dragon Engine Yakuza games",
   "ModDll": "DragonEssentials.dll",
   "ModIcon": "Preview.png",
@@ -36,7 +36,8 @@
     "lostjudgment.exe",
     "likeadragon8.exe",
     "yakuzalikeadragon.exe",
-    "yakuza6.exe"
+    "yakuza6.exe",
+    "yakuzakiwami2.exe"
   ],
   "ProjectUrl": "https://github.com/DeathChaos25/DragonEssentials"
 }

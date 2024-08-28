@@ -24,23 +24,23 @@ namespace DragonEssentials
                 }
             }
 
-            if (input.Contains("entity_elvis"))
+            if (input.Contains("entity_elvis")) // LAD:IW
             {
                 input = input.Replace("entity_elvis", "entity");
             }
-            else if (input.Contains("entity_aston"))
+            else if (input.Contains("entity_aston")) // Gaiden
             {
                 input = input.Replace("entity_aston", "entity");
             }
-            else if (input.Contains("entity_yazawa"))
+            else if (input.Contains("entity_yazawa")) // YLAD
             {
                 input = input.Replace("entity_yazawa", "entity");
             }
-            else if (input.Contains("entity_judge"))
+            else if (input.Contains("entity_judge")) // Judgment
             {
                 input = input.Replace("entity_judge", "entity");
             }
-            else if (input.Contains("entity_coyote"))
+            else if (input.Contains("entity_coyote")) // LJ
             {
                 input = input.Replace("entity_coyote", "entity");
             }

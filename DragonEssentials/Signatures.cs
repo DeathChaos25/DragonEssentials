@@ -94,6 +94,16 @@ namespace DragonEssentials
                 }
             },
             {
+                "yakuzakiwami2.exe", // Yakuza Kiwami 2
+                new Signatures
+                {
+                    GetPath2 = "48 8B C4 89 50 ?? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC A8 01 00 00",
+                    GetPath2X = "48 8B C4 89 50 ?? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC A8 01 00 00",
+                    GetEntityPath = "48 89 5C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 0F B7 F2",
+                    GetEntityPathX = "48 89 5C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 0F B7 F2",
+                }
+            },
+            {
                 "binarydomain.exe", // Binary Domain
                 new Signatures
                 {
