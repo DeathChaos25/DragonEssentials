@@ -6,12 +6,12 @@ Makes use of [CRI FileSystem V2 Hook](https://github.com/Sewer56/CriFs.V2.Hook.R
 - Judgment
 - Lost Judgment
 - Yakuza Kiwami 2
-- Yakuza 6: Song of Life
+- Yakuza 6: The Song of Life
 - Yakuza: Like a Dragon
 - Like a Dragon: Gaiden  
 - Like a Dragon: Infinite Wealth
 
-  (Note: Only LAD:IW and Gaiden have been fully thoroughly tested)
+  (Note: Only LAD:IW and Gaiden have been thoroughly/extensively tested)
 
 ## Features
 - Loading loose files from PAR
