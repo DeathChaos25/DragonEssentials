@@ -19,6 +19,7 @@ Makes use of [CRI FileSystem V2 Hook](https://github.com/Sewer56/CriFs.V2.Hook.R
 - Logging file access
 - Can use .all instead of language specific directory to replace db/ui files in all languages without copies
 - (i.e. using .all will replace db.elvis.en as well as db.elvis.de, db.elvis.es, etc)
+- Can replace USMs from within mod files
 - Being a Reloaded-II mod means it can be used alongside other great Reloaded-II specific frameworks [such as Ryo](https://github.com/T-PoseRatkechi/Ryo).
 
 ## Planned Features
