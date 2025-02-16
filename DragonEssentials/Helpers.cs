@@ -28,6 +28,10 @@ namespace DragonEssentials
             {
                 input = input.Replace("entity_elvis", "entity");
             }
+            else if (input.Contains("entity_spr")) // LAD:PYIH
+            {
+                input = input.Replace("entity_spr", "entity");
+            }
             else if (input.Contains("entity_aston")) // Gaiden
             {
                 input = input.Replace("entity_aston", "entity");

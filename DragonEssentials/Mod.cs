@@ -50,6 +50,7 @@ namespace DragonEssentials
 
         internal unsafe delegate int GetPath2Delegate(nint file_path, uint a2, nint a3, nint a4);
         internal unsafe delegate int GetEntityPathDelegate(nint file_path, uint e_kind, uint stage_id, uint daynight, nint uid);
+        internal unsafe delegate int GetEntityPathPirateDelegate(nint file_path, nint a2, nint a3, ushort a4, int a5, nint a6, nint a7);
         internal bool hasExtractedUBIK = false;
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall, CharSet = CharSet.Unicode)]
@@ -64,6 +65,7 @@ namespace DragonEssentials
         private Dictionary<string, string> _redirectionsFull = new();
         private unsafe IHook<GetPath2Delegate> _getPath2Hook;
         private unsafe IHook<GetEntityPathDelegate> _getEntityPathHook;
+        private unsafe IHook<GetEntityPathPirateDelegate> _getEntityPathHookPYIH;
         private IHook<CreateFileWDelegate> _createFileWHook;
 
         private IDragonEssentials _api;
@@ -84,6 +86,8 @@ namespace DragonEssentials
 
             unsafe
             {
+                var exeName = GetExecutableName();
+
                 SigScan(_configuration.isGamePass ? sigs.GetPath2X : sigs.GetPath2, "GetPath2", address =>
                 {
                     _getPath2Hook = _hooks.CreateHook<GetPath2Delegate>(GetPath2, address).Activate();
@@ -91,7 +95,14 @@ namespace DragonEssentials
 
                 SigScan(_configuration.isGamePass ? sigs.GetEntityPathX : sigs.GetEntityPath, "GetEntityPath", address =>
                 {
-                    _getEntityPathHook = _hooks.CreateHook<GetEntityPathDelegate>(GetEntityPath, address).Activate();
+                    if (exeName.Contains("likeadragonpirates"))
+                    {
+                        _getEntityPathHookPYIH = _hooks.CreateHook<GetEntityPathPirateDelegate>(GetEntityPathPirate, address).Activate();
+                    }
+                    else
+                    {
+                        _getEntityPathHook = _hooks.CreateHook<GetEntityPathDelegate>(GetEntityPath, address).Activate();
+                    }
                 });
 
                 SigScan(sigs.FileErrorString, "FileErrorString", address =>
@@ -236,6 +247,24 @@ namespace DragonEssentials
         private unsafe int GetEntityPath(nint file_path, uint e_kind, uint stage_id, uint daynight, nint uid)
         {
             int result = _getEntityPathHook.OriginalFunction(file_path, e_kind, stage_id, daynight, uid);
+
+            string target_file = Marshal.PtrToStringAnsi(file_path);
+
+            LogAccess($"{target_file}");
+
+            if (!TryFindLooseFileShort(target_file, out var looseFile)) return result;
+
+            LogRedirect($"GetEntityPath: Redirected file to {looseFile}");
+
+            var memory = Memory.Instance;
+            memory.SafeWrite((nuint)(file_path + ReplaceFilePathWithMod(file_path, looseFile.ToLower())), NullTermBytes);
+
+            return 0;
+        }
+
+        private unsafe int GetEntityPathPirate(nint file_path, nint a2, nint a3, ushort a4, int a5, nint a6, nint a7)
+        {
+            int result = _getEntityPathHookPYIH.OriginalFunction(file_path, a2, a3, a4, a5, a6, a7);
 
             string target_file = Marshal.PtrToStringAnsi(file_path);
 

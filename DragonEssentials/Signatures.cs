@@ -42,6 +42,18 @@ namespace DragonEssentials
                 }
             },
             {
+                "likeadragonpirates.exe", // Like a Dragon: Pirate Yakuza in Hawaii (Majima Gaiden)
+                new Signatures
+                {
+                    FileErrorString = "66 69 6c 65 20 65 72 72 6f 72 20 3c 25 73 3e",
+                    UbikPathString = "64 61 74 61 2F 63 68 61 72 61 2F 75 62 69 6B 2F",
+                    GetPath2 = "48 8B C4 4C 89 48 ?? 89 50 ?? 55",
+                    GetPath2X = "48 8B C4 4C 89 48 ?? 89 50 ?? 55",
+                    GetEntityPath = "48 89 5C 24 ?? 48 89 6C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 48 8B D9 41 0F B7 E9",
+                    GetEntityPathX = "48 89 5C 24 ?? 48 89 6C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 48 8B D9 41 0F B7 E9",
+                }
+            },
+            {
                 "likeadragongaiden.exe", // Like a Dragon Gaiden: The Man Who Erased His Name
                 new Signatures
                 {
