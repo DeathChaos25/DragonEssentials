@@ -182,6 +182,18 @@ namespace DragonEssentials
                     _redirectionsFull[gamePath] = file.ToLower();
                     continue;
                 }
+                else if (gamePath.EndsWith(".gmt"))
+                {
+                    var exeName = GetExecutableName();
+
+                    if (exeName.Contains("likeadragonpirates"))
+                    {
+                        string hash = GetFilenameChecksum(localPath);
+                        string newDir = Path.Join(hash, Path.GetFileName(localPath));
+
+                        localPath = localPath.Replace(Path.GetFileName(localPath).ToLower(), newDir);
+                    }
+                }   
 
                 LogDebug($"Adding {file.ToLower()} as {localPath}");
 
@@ -204,17 +216,17 @@ namespace DragonEssentials
 
         private bool TryFindLooseFile(string gameFilePath, out string? looseFile)
         {
-            return _redirections.TryGetValue(gameFilePath, out looseFile);
+            return _redirections.TryGetValue(gameFilePath.ToLower(), out looseFile);
         }
 
         private bool TryFindLooseFileShort(string gameFilePath, out string? looseFile)
         {
-            return _redirectionsShort.TryGetValue(gameFilePath, out looseFile);
+            return _redirectionsShort.TryGetValue(gameFilePath.ToLower(), out looseFile);
         }
 
         private bool TryFindLooseFileFull(string gameFilePath, out string? looseFile)
         {
-            return _redirectionsFull.TryGetValue(gameFilePath, out looseFile);
+            return _redirectionsFull.TryGetValue(gameFilePath.ToLower(), out looseFile);
         }
 
         private Signatures GetSignatures()

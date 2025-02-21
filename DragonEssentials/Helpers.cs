@@ -82,7 +82,7 @@ namespace DragonEssentials
         {
             var CurrentProcess = Process.GetCurrentProcess();
             var mainModule = CurrentProcess.MainModule;
-            return Path.GetFileName(mainModule!.FileName);
+            return Path.GetFileName(mainModule!.FileName).ToLower();
         }
 
         internal static string GetGameDirectory()
@@ -106,6 +106,26 @@ namespace DragonEssentials
                 tempFileStream.Position = 0;
                 new ZipArchive(tempFileStream, ZipArchiveMode.Read).ExtractToDirectory(outputFolderPath);
             }
+        }
+
+        internal static string GetFilenameChecksum(string filePath)
+        {
+            string fileNameWithoutExt = Path.GetFileNameWithoutExtension(filePath).ToLower();
+            byte checksum = ComputeHxDChecksum8(fileNameWithoutExt);
+            return checksum.ToString("X4");
+        }
+
+        internal static byte ComputeHxDChecksum8(string input)
+        {
+            int sum = 0;
+            byte[] bytes = Encoding.UTF8.GetBytes(input);
+
+            foreach (byte b in bytes)
+            {
+                sum = (sum + b) & 0xFF;
+            }
+
+            return (byte)sum;
         }
     }
 }
