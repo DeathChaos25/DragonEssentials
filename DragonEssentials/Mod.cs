@@ -182,7 +182,7 @@ namespace DragonEssentials
                     _redirectionsFull[gamePath] = file.ToLower();
                     continue;
                 }
-                else if (gamePath.EndsWith(".gmt"))
+                else if (gamePath.EndsWith(".gmt") && gamePath.Contains("motion"))
                 {
                     var exeName = GetExecutableName();
 
