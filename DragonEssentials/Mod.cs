@@ -90,7 +90,14 @@ namespace DragonEssentials
 
                 SigScan(_configuration.isGamePass ? sigs.GetPath2X : sigs.GetPath2, "GetPath2", address =>
                 {
-                    _getPath2Hook = _hooks.CreateHook<GetPath2Delegate>(GetPath2, address).Activate();
+                    if (address == -1)
+                    {
+                        LogError("Failed to find GetPath2 address! Attempting Alternate Scan");
+                    }
+                    else
+                    {
+                        _getPath2Hook = _hooks.CreateHook<GetPath2Delegate>(GetPath2, address).Activate();
+                    }
                 });
 
                 SigScan(_configuration.isGamePass ? sigs.GetEntityPathX : sigs.GetEntityPath, "GetEntityPath", address =>
@@ -117,6 +124,19 @@ namespace DragonEssentials
                     byte[] NewUBIKHex = new byte[] { 0x75, 0x62, 0x69, 0x6B, 0x5F, 0x72, 0x65, 0x64, 0x69, 0x72, 0x65, 0x63, 0x74, 0x2F, 0x00, 0x00 };
                     var memory = Memory.Instance;
                     memory.SafeWrite((nuint)address, NewUBIKHex);
+                });
+
+                SigScan(_configuration.isGamePass ? sigs.GetPath2AltX : sigs.GetPath2Alt, "GetPath2Alt", address =>
+                {
+                    if (address == -1)
+                    {
+                        LogError("Failed Alternate Scan; if GetPath2 did not give error you can ignore this");
+                    }
+                    else
+                    {
+                        _getPath2Hook = _hooks.CreateHook<GetPath2Delegate>(GetPath2, address).Activate();
+                        LogWarning("Alternate Scan Successful");
+                    }
                 });
             }
 
@@ -176,9 +196,9 @@ namespace DragonEssentials
                 var gamePath = Path.Combine(GetGameDirectory(), "data", modFilePath).ToLower(); // recreate what the game would try to load
                 var localPath = Path.Combine("data", modFilePath).ToLower(); // recreate what the game would try to load
 
-                if (gamePath.EndsWith(".usm"))
+                if (gamePath.EndsWith(".usm") || (gamePath.Contains("customize") && gamePath.EndsWith(".dds")))
                 {
-                    LogDebug($"Adding usm {file.ToLower()} as {localPath}");
+                    LogDebug($"Adding {file.ToLower()} as {localPath}");
                     _redirectionsFull[gamePath] = file.ToLower();
                     continue;
                 }

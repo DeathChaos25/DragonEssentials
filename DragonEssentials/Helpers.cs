@@ -13,7 +13,7 @@ namespace DragonEssentials
     {
         static string newUBIKPath = Path.Combine(GetGameDirectory().ToLower(), "ubik_redirect\\");
 
-        internal static List<string> languages = new List<string> { "de", "en", "es", "fr", "it", "ja", "ko", "pt", "ru", "zh", "zhs", "pt" };
+        internal static List<string> languages = new List<string> { "de", "en", "es", "fr", "it", "ja", "ko", "pt", "ru", "zh", "zhs", "zht", "pt" };
         internal static string processLanguageString(string input)
         {
             foreach (string lang in languages)
@@ -111,11 +111,11 @@ namespace DragonEssentials
         internal static string GetFilenameChecksum(string filePath)
         {
             string fileNameWithoutExt = Path.GetFileNameWithoutExtension(filePath).ToLower();
-            byte checksum = ComputeHxDChecksum8(fileNameWithoutExt);
+            byte checksum = Checksum8(fileNameWithoutExt);
             return checksum.ToString("X4");
         }
 
-        internal static byte ComputeHxDChecksum8(string input)
+        internal static byte Checksum8(string input)
         {
             int sum = 0;
             byte[] bytes = Encoding.UTF8.GetBytes(input);

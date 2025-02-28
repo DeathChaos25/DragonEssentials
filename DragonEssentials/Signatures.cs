@@ -12,9 +12,10 @@ namespace DragonEssentials
         internal string UbikPathString { get; set; }
         internal string GetEntityPath { get; set; }
         internal string GetEntityPathX { get; set; }
-        internal string Get_VPath { get; set; }
         internal string GetPath2 { get; set; }
         internal string GetPath2X { get; set; }
+        internal string GetPath2Alt { get; set; }
+        internal string GetPath2AltX { get; set; }
 
         // To find the Get_VPath address, look for shader filepath construction string,
         // i.e. "data/shader/aston_shader_%s.par"
@@ -51,6 +52,8 @@ namespace DragonEssentials
                     GetPath2X = "48 8B C4 4C 89 48 ?? 89 50 ?? 55",
                     GetEntityPath = "48 89 5C 24 ?? 48 89 6C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 48 8B D9 41 0F B7 E9",
                     GetEntityPathX = "48 89 5C 24 ?? 48 89 6C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 48 8B D9 41 0F B7 E9",
+                    GetPath2Alt = "4C 89 4C 24 ?? 89 54 24 ?? 55 53 56 57 41 54 41 55 41 56 41 57 48 81 EC E8 02 00 00",
+                    GetPath2AltX = "4C 89 4C 24 ?? 89 54 24 ?? 55 53 56 57 41 54 41 55 41 56 41 57 48 81 EC E8 02 00 00",
                 }
             },
             {
@@ -113,15 +116,6 @@ namespace DragonEssentials
                     GetPath2X = "48 8B C4 89 50 ?? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC A8 01 00 00",
                     GetEntityPath = "48 89 5C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 0F B7 F2",
                     GetEntityPathX = "48 89 5C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 0F B7 F2",
-                }
-            },
-            {
-                "binarydomain.exe", // Binary Domain
-                new Signatures
-                {
-                    Get_VPath = "56 68 04 01 00 00 FF 15 ?? ?? ?? ??",
-                    GetPath2 = "55 8B EC 83 E4 F8 81 EC D4 01 00 00 53 89 54 24 ??",
-                    GetEntityPath = "48 89 5C 24 ?? 48 89 74 24 ?? 48 89 7C 24 ?? 41 56 48 83 EC 20 41 8B F8 48 8B D9",
                 }
             },
         };

@@ -76,7 +76,8 @@ namespace DragonEssentials
                 {
                     if (!result.Found)
                     {
-                        LogError($"Unable to find {name}, stuff won't work :(");
+                        LogError($"Unable to find {name} - If game is in latest update please report error");
+                        action(-1);
                         return;
                     }
                     LogDebug($"Found {name} at 0x{result.Offset + BaseAddress:X}");
