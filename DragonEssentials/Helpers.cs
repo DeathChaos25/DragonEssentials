@@ -48,6 +48,10 @@ namespace DragonEssentials
             {
                 input = input.Replace("entity_coyote", "entity");
             }
+            else if (input.Contains(".common")) // ui.game.common
+            {
+                input = input.Replace(".common", "\\common");
+            }
 
             return input.ToLower();
         }
