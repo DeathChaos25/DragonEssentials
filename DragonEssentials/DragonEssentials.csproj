@@ -52,6 +52,9 @@
     <None Update="ubik\likeadragonpirates.zlib">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="ubik\kiwami3.zlib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

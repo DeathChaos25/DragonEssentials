@@ -91,6 +91,8 @@ namespace DragonEssentials
             }
         }
 
+        public static string FixDoubleBackslash(string path) => path.Replace("//", "/");
+
         /// <summary>
         /// Gets the address of a global from something that references it
         /// </summary>

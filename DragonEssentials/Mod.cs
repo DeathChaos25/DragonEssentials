@@ -206,7 +206,7 @@ namespace DragonEssentials
                 {
                     var exeName = GetExecutableName();
 
-                    if (exeName.Contains("likeadragonpirates"))
+                    if (exeName.Contains("likeadragonpirates") || exeName.Contains("yakuzakiwami3"))
                     {
                         string hash = GetFilenameChecksum(localPath);
                         string newDir = Path.Join(hash, Path.GetFileName(localPath));
@@ -266,6 +266,8 @@ namespace DragonEssentials
             string target_file = Marshal.PtrToStringAnsi(file_path);
 
             if (!target_file.Contains("data/")) return result;
+
+            target_file = FixDoubleBackslash(target_file);
 
             LogAccess($"{target_file}");
 

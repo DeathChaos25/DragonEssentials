@@ -48,6 +48,10 @@ namespace DragonEssentials
             {
                 input = input.Replace("entity_coyote", "entity");
             }
+            else if (input.Contains("entity_bis")) // Kiwami 3
+            {
+                input = input.Replace("entity_bis", "entity");
+            }
             else if (input.Contains(".common")) // ui.game.common
             {
                 input = input.Replace(".common", "\\common");
